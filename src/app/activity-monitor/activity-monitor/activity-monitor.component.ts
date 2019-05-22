@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivityMonitorService } from '../activity-monitor.service';
+
 
 @Component({
   selector: 'app-activity-monitor',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActivityMonitorComponent implements OnInit {
 
-  constructor() { }
+  constructor(private activityMonitorService: ActivityMonitorService) { }
 
   ngOnInit() {
+    this.activityMonitorService.testMethod();
   }
 
 }

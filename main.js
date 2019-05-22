@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 
 let win;
 
@@ -7,7 +7,11 @@ function createWindow () {
   win = new BrowserWindow({
     width: 1200, 
     height: 1200,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
+    webPreferences: {
+      nodeIntegration: true,
+		  backgroundThrottling: false
+    }
   })
 
 
@@ -38,4 +42,9 @@ app.on('activate', function () {
   if (win === null) {
     createWindow()
   }
+})
+
+ipcMain.on('test', (event, arg) => {
+  console.log(arg)
+  event.reply('testReply', 'reply')
 })
