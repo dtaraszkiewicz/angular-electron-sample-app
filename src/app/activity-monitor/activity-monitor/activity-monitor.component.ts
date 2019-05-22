@@ -12,7 +12,6 @@ export class ActivityMonitorComponent implements OnInit {
   constructor(private activityMonitorService: ActivityMonitorService) { }
 
   ngOnInit() {
-    this.activityMonitorService.testMethod();
     this.activityMonitorService.getCPUTimes();
   }
 

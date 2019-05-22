@@ -1,5 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
-const { os } = require('os');
+const { app, BrowserWindow } = require('electron');
 
 let win;
 
@@ -43,13 +42,4 @@ app.on('activate', function () {
   if (win === null) {
     createWindow()
   }
-})
-
-ipcMain.on('test', (event, arg) => {
-  event.reply('testReply', 'reply')
-})
-
-ipcMain.on('getCPUTimes', (event, arg) => {
-  const cpus = os.type();
-  event.reply('cpuTimes', cpus);
 })
