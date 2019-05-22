@@ -5,11 +5,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Run in desktop
 
 npm install
+
 npm run electron-build
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+IMPORTANT: Actions specific to operating system(f.e. getting CPU times) won't work on browser environment.
 
 ## Code scaffolding
 
