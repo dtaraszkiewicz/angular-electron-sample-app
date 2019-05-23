@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import Os from 'os';
+import Os, { CpuInfo } from 'os';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ActivityMonitorService {
 
-  constructor() { }
+  cpuTimes$: Observable<CpuInfo[]>;
 
-  getCPUTimes(){
+  constructor() { 
     let os: typeof Os = window['require']('os');
-    const test = os.cpus();
-    console.log(test);
+    this.cpuTimes$ = Observable.create(observer => {
+      observer.next(os.cpus())
+    })
   }
 }
