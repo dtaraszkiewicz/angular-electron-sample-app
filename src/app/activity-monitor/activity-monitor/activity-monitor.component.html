@@ -1,3 +1,66 @@
-<p>
-  activity-monitor works!
-</p>
+<div class="container">
+
+  <div class="row d-flex justify-content-center align-items-center mt-2">
+    <div class="col-10">
+        <ngx-charts-bar-horizontal-normalized
+      [scheme]="colorScheme"
+      [results]="cpuTimes"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel">
+    </ngx-charts-bar-horizontal-normalized>
+    </div>
+  </div>
+
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-6">
+        <ngx-charts-pie-chart
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="systemMemory"
+        [legend]="showLegend"
+        [explodeSlices]="explodeSlices"
+        [labels]="showLabels"
+        [doughnut]="doughnut"
+        [gradient]="gradient"
+        (select)="onSelect($event)">
+      </ngx-charts-pie-chart>
+    </div>
+  </div>
+
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-8">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                CPU raw data
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            {{cpuTimesRawData}}
+          </mat-expansion-panel>
+    </div>
+    <div class="col-3">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Memory raw data
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            {{systemMemoryRawData}}
+          </mat-expansion-panel>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+

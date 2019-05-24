@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
 
 let win;
 
@@ -7,11 +7,17 @@ function createWindow () {
   win = new BrowserWindow({
     width: 1200, 
     height: 1200,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
+    webPreferences: {
+      nodeIntegration: true,
+		  backgroundThrottling: false
+    }
   })
 
 
   win.loadURL(`file://${__dirname}/dist/angular-electron-sample-app/index.html`)
+
+  win.maximize();
 
   win.webContents.openDevTools()
 

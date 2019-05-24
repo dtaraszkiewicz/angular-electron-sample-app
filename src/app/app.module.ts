@@ -8,6 +8,7 @@ import { ElectronMaterialModule } from './electron-material/electron-material.mo
 import { ActivityMonitorModule } from './activity-monitor/activity-monitor.module';
 import { HomePageComponent } from './home-page/home-page.component';
 import { AppRoutingModule } from './app-routing.module';
+import { NgxElectronModule } from 'ngx-electron';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AppRoutingModule } from './app-routing.module';
     ElectronMaterialModule,
     SharedModule,
     AppRoutingModule,
-    ActivityMonitorModule
+    ActivityMonitorModule,
+    NgxElectronModule
   ],
   providers: [],
   bootstrap: [AppComponent]
