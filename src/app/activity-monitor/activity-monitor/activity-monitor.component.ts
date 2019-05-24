@@ -17,6 +17,7 @@ export class ActivityMonitorComponent implements OnInit, OnDestroy {
   @Output() systemMemory: any[];
   @Output() cpuTimes: any[];
 
+  view: any[] = [600, 400];
   showXAxis = true;
   showYAxis = true;
   gradient = false;

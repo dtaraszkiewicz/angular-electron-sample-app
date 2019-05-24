@@ -4,13 +4,15 @@ import { ActivityMonitorComponent } from './activity-monitor/activity-monitor.co
 
 import { NgxElectronModule } from 'ngx-electron';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ElectronMaterialModule } from '../electron-material/electron-material.module';
 
 @NgModule({
   declarations: [ActivityMonitorComponent],
   imports: [
     CommonModule,
     NgxElectronModule,
-    NgxChartsModule
+    NgxChartsModule,
+    ElectronMaterialModule
   ],
   exports: [
     ActivityMonitorComponent

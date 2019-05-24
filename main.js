@@ -17,6 +17,8 @@ function createWindow () {
 
   win.loadURL(`file://${__dirname}/dist/angular-electron-sample-app/index.html`)
 
+  win.maximize();
+
   win.webContents.openDevTools()
 
   // Event when the window is closed.
