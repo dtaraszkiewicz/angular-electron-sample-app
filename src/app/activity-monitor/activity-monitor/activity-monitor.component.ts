@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, OnDestroy } from '@angular/core';
 import { ActivityMonitorService } from '../activity-monitor.service';
-import { CpuInfo } from 'os';
 import { Subscription } from 'rxjs';
 import { SystemMemoryModel } from './models/system-memory.model';
 import { ChartValueModel } from './models/chart-value.model';
+import { CpuTimesModel } from './models/cpu-times.model';
 
 
 @Component({
@@ -61,33 +61,14 @@ export class ActivityMonitorComponent implements OnInit, OnDestroy {
     );
   }
 
-  private updateCPUTimes(cpuTimes: CpuInfo[]) {
-    const cpuTimesChartModel = this.getCpuTimesChart(cpuTimes);
-
-    this.cpuTimesRawData = JSON.stringify(cpuTimes);
-    this.cpuTimes = cpuTimesChartModel;
-  }
-
   private updateSystemMemory(systemMemory: SystemMemoryModel) {
     this.systemMemoryRawData = JSON.stringify(systemMemory);
     this.systemMemory = this.getSystemMemoryChart(systemMemory);
   }
 
-  private getSeries(times: CpuInfo['times']): ChartValueModel[] {
-    return [
-      { name: "System", value: times.sys },
-      { name: "User", value: times.user },
-      { name: "Idle", value: times.idle }
-    ];
-  }
-
-  private getCpuTimesChart(cpuTimes: CpuInfo[]) {
-    return cpuTimes.map((cpuTime, index) => {
-      return {
-        name: `${cpuTime.model} ${index}`,
-        series: this.getSeries(cpuTime.times)
-      };
-    });
+  private updateCPUTimes(cpuTimes: CpuTimesModel) {
+    this.cpuTimesRawData = cpuTimes.rawData;
+    this.cpuTimes = cpuTimes.data;
   }
 
   private getSystemMemoryChart(systemMemory: SystemMemoryModel): ChartValueModel[] {
