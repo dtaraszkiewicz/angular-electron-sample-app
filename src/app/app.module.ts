@@ -9,6 +9,7 @@ import { ActivityMonitorModule } from './activity-monitor/activity-monitor.modul
 import { HomePageComponent } from './home-page/home-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NgxElectronModule } from 'ngx-electron';
+import { FileExplorerModule } from './file-explorer/file-explorer.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NgxElectronModule } from 'ngx-electron';
     SharedModule,
     AppRoutingModule,
     ActivityMonitorModule,
-    NgxElectronModule
+    NgxElectronModule,
+    FileExplorerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
