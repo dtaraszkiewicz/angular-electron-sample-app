@@ -1,7 +1,6 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import Fs from 'fs';
-import {Subject} from 'rxjs';
-import {FileTreeNode} from './models/file-tree-node';
+import { DynamicFlatNode } from './models/dynamic-flat-node';
 
 @Injectable({
   providedIn: 'root'
@@ -13,46 +12,28 @@ export class FileExplorerService {
   }
 
   private currentPath: string = process.cwd();
-  private readonly emptyDirectory = '';
-  files$ = new Subject<FileTreeNode[]>();
-  currentDirectory$ = new Subject<string>();
-
   fs: typeof Fs;
 
-  static mapToTreeStructure(paths: string[]): FileTreeNode[] {
-    return paths.map((path: string) => {
-      return {
-        name: path,
-        path: path
-      };
+  getRoot(): DynamicFlatNode[] {
+    return this.fs.readdirSync(`${this.currentPath}`)
+      .map((file: string) =>  this.mapFileToNode(file, file));
+  }
+
+  getChildren(node: DynamicFlatNode): DynamicFlatNode[] {
+    return this.fs.readdirSync(node.relativePath)
+    .map((file: string) => {
+      if(node.relativePath === node.item) {
+        return this.mapFileToNode(file, `${node.item}/${file}`, node.level+1);
+      }
+      return this.mapFileToNode(file, `${node.relativePath}/${file}`, node.level+1);
     });
   }
 
-  getFileSystemInfo(directoryToLoad?: string): string {
-    this.fs.readdir(`${this.currentPath}${directoryToLoad ? directoryToLoad : this.emptyDirectory}`, (err: Error, files: [string]) => {
-      if (err) {
-        console.error(err);
-      }
+  isExpandable(path: string): boolean {
+    return this.fs.statSync(path).isDirectory();
+  }
 
-      const nodesWithChildren = files.map((file: string) => {
-        const isDirectory = this.fs.statSync(file).isDirectory();
-
-        const newFile: FileTreeNode = {
-          name: file,
-          children: undefined
-        };
-
-        if (isDirectory) {
-          newFile.children = FileExplorerService.mapToTreeStructure(this.fs.readdirSync(`${this.currentPath}/${file}`));
-        }
-
-        return newFile;
-      });
-
-
-      this.files$.next(nodesWithChildren);
-    });
-
-    return `${directoryToLoad}`;
+  private mapFileToNode(fileName: string, filePath: string, level = 0) {
+    return new DynamicFlatNode(fileName, level, this.fs.statSync(filePath).isDirectory(), false, filePath);
   }
 }

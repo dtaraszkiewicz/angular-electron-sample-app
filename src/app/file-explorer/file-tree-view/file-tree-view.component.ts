@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material';
-import {FlatTreeControl} from '@angular/cdk/tree';
-import {FileTreeFlatNode} from '../models/file-tree-flat-node';
-import {FileTreeNode} from '../models/file-tree-node';
+import { Component, OnInit } from '@angular/core';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { DynamicFlatNode } from '../models/dynamic-flat-node';
+import { DynamicDataSourceService } from '../services/dynamic-data-source.service';
+import { DynamicTreeService } from '../services/dynamic-tree.service';
+
 
 @Component({
   selector: 'app-file-tree-view',
@@ -10,31 +11,25 @@ import {FileTreeNode} from '../models/file-tree-node';
   styleUrls: ['./file-tree-view.component.css']
 })
 export class FileTreeViewComponent implements OnInit {
-  @Input() treeData: FileTreeNode[];
+  constructor(
+    private treeService: DynamicTreeService) {
 
-  transformer = (node: FileTreeNode, level: number) => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      name: node.name,
-      level: level,
-    };
   }
 
-  constructor() {
+  ngOnInit(): void{
+    this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
+    this.dataSource = new DynamicDataSourceService(this.treeControl, this.treeService);
+    this.dataSource.data = this.treeService.initialData();
   }
 
-  treeControl = new FlatTreeControl<FileTreeFlatNode>(
-    node => node.level, node => node.expandable);
+  treeControl: FlatTreeControl<DynamicFlatNode>;
 
-  treeFlattener = new MatTreeFlattener(
-    this.transformer, node => node.level, node => node.expandable, node => node.children);
+  dataSource: DynamicDataSourceService;
 
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  getLevel = (node: DynamicFlatNode) => node.level;
 
-  ngOnInit() {
-    this.dataSource.data = this.treeData;
-  }
+  isExpandable = (node: DynamicFlatNode) => node.expandable;
 
-  hasChild = (_: number, node: FileTreeFlatNode) => node.expandable;
+  hasChild = (_: number, _nodeData: DynamicFlatNode) => _nodeData.expandable;
 
 }
