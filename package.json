@@ -1,8 +1,8 @@
 {
-  "name": "app",
+  "name": "electronapp",
   "version": "0.0.0",
   "main": "main.js",
-  "productName": "app",
+  "productName": "electronapp",
   "author": "Damian",
   "description": "Angular Electron Sample App",
   "scripts": {
@@ -15,9 +15,11 @@
     "electron": "electron .",
     "electron-build": "ng build && electron .",
     "electron-build-prod": "ng build --prod && electron .",
-    "package-windows": "electron-packager . app --overwrite --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.FileDescription=app --version-string.ProductName='Angular Electron App'",
-    "package-all": "electron-packager . app --overwrite --all --prune=true --out=release-builds --version-string.FileDescription=app --version-string.ProductName='Angular Electron App'",
-    "installer-windows": "electron-installer-windows --src release-builds/app-win32-ia32/ --dest dist/installers/"
+    "package-windows": "electron-packager . electronapp --overwrite --platform=win32 --arch=ia32 --asar=true --prune=true --out=release-builds --version-string.FileDescription=app --version-string.ProductName='Angular Electron App'",
+    "package-windows-x64": "electron-packager . electronapp --overwrite --platform=win32 --arch=x64 --asar=true --prune=true --out=release-builds --version-string.FileDescription=app --version-string.ProductName='Angular Electron App'",
+    "package-all": "electron-packager . electronapp --overwrite --all --asar=true --prune=true --out=release-builds --version-string.FileDescription=app --version-string.ProductName='Angular Electron App'",
+    "installer-windows": "electron-installer-windows --src release-builds/electronapp-win32-ia32/ --dest dist/installers/",
+    "installer-windows-x64": "electron-installer-windows --src release-builds/electronapp-win32-x64/ --dest dist/installers/"
   },
   "private": true,
   "dependencies": {
@@ -34,6 +36,7 @@
     "@swimlane/ngx-charts": "^11.1.0",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
+    "electron-squirrel-startup": "^1.0.0",
     "ngx-electron": "^2.1.1",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
