@@ -1,5 +1,13 @@
 const { app, BrowserWindow } = require('electron');
 
+if (require('electron-squirrel-startup')) app.quit();
+// if first time install on windows, do not run application, rather
+// let squirrel installer do its work
+const setupEvents = require('./setup-events');
+if (setupEvents.handleSquirrelEvent()) {
+  process.exit();
+}
+
 let win;
 
 function createWindow () {
@@ -12,14 +20,11 @@ function createWindow () {
       nodeIntegration: true,
 		  backgroundThrottling: false
     }
-  })
-
+  });
 
   win.loadURL(`file://${__dirname}/dist/angular-electron-sample-app/index.html`)
 
   win.maximize();
-
-  win.webContents.openDevTools()
 
   // Event when the window is closed.
   win.on('closed', function () {
@@ -28,20 +33,25 @@ function createWindow () {
 }
 
 // Create window on electron intialization
-app.on('ready', createWindow)
+app.on('ready', function () {
+  createWindow();
+  if (app.isPackaged === false) {
+    win.webContents.openDevTools();
+  }
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
 
   // On macOS specific close process
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
 })
 
 app.on('activate', function () {
   // macOS specific close process
   if (win === null) {
-    createWindow()
+    createWindow();
   }
 })
