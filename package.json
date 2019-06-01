@@ -1,7 +1,10 @@
 {
-  "name": "angular-electron-sample-app",
+  "name": "app",
   "version": "0.0.0",
   "main": "main.js",
+  "productName": "app",
+  "author": "Damian",
+  "description": "Angular Electron Sample App",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,7 +14,9 @@
     "e2e": "ng e2e",
     "electron": "electron .",
     "electron-build": "ng build && electron .",
-    "electron-build-prod": "ng build --prod && electron ."
+    "electron-build-prod": "ng build --prod && electron .",
+    "package-windows": "electron-packager . app --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.FileDescription=app --version-string.ProductName='Angular Electron App'",
+    "installer-windows": "electron-installer-windows --src release-builds/app-win32-ia32/ --dest dist/installers/"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +48,9 @@
     "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
     "electron": "^5.0.1",
+    "electron-installer-windows": "^1.1.1",
+    "electron-packager": "^13.1.1",
+    "electron-winstaller": "^3.0.4",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.1.1",
