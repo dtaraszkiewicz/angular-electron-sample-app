@@ -1,4 +1,7 @@
-const { app, BrowserWindow, autoUpdater } = require('electron');
+const { app, BrowserWindow } = require('electron');
+require('update-electron-app')({
+  repo: 'dtaraszkiewicz/angular-electron-sample-app'
+});
 
 if (require('electron-squirrel-startup')) app.quit();
 // if first time install on windows, do not run application, rather
@@ -37,16 +40,6 @@ app.on('ready', function () {
   createWindow();
   if (app.isPackaged === false) {
     win.webContents.openDevTools();
-  }
-  else {
-    const server = 'https://update.electronjs.org'
-    const feed = `${server}/dtaraszkiewicz/angular-electron-sample-app/${process.platform}-${process.arch}/${app.getVersion()}`;
-  
-    autoUpdater.setFeedURL(feed);
-  
-    setInterval(() => {
-      autoUpdater.checkForUpdates();
-    }, 10 * 60 * 1000)
   }
 })
 
