@@ -1,4 +1,7 @@
 const { app, BrowserWindow } = require('electron');
+require('update-electron-app')({
+  repo: 'dtaraszkiewicz/angular-electron-sample-app'
+});
 
 if (require('electron-squirrel-startup')) app.quit();
 // if first time install on windows, do not run application, rather
